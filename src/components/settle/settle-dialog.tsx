@@ -52,6 +52,9 @@ export function SettleDialog({
   const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
 
+  /** Prevent accidental dismissal while a transaction is in-flight. */
+  const dismissible = step !== "signing" && step !== "confirming";
+
   function close() {
     onClose();
     // reset after the close animation
@@ -104,7 +107,7 @@ export function SettleDialog({
   if (!target) return null;
 
   return (
-    <Dialog open={open} onClose={close} title={target.label}>
+    <Dialog open={open} onClose={close} title={target.label} dismissible={dismissible}>
       <div className="space-y-5">
         <div className="rounded-2xl border-3 border-ink bg-paper p-5">
           <div className="flex items-center justify-between">

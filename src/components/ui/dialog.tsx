@@ -12,23 +12,28 @@ export function Dialog({
   title,
   children,
   className,
+  dismissible = true,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
   className?: string;
+  /** When false, Escape and backdrop click do not close the dialog. Default: true. */
+  dismissible?: boolean;
 }) {
   useEffect(() => {
     if (!open) return;
-    const handler = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && dismissible) onClose();
+    };
     document.addEventListener("keydown", handler);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handler);
       document.body.style.overflow = "";
     };
-  }, [open, onClose]);
+  }, [open, onClose, dismissible]);
 
   if (typeof document === "undefined") return null;
 
@@ -40,7 +45,7 @@ export function Dialog({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60"
-          onClick={onClose}
+          onClick={dismissible ? onClose : undefined}
           role="dialog"
           aria-modal="true"
           aria-label={title}
@@ -61,7 +66,8 @@ export function Dialog({
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="border-2 border-ink rounded-lg bg-cream p-1 shadow-brutal-sm hover:bg-flamingo transition-colors"
+                disabled={!dismissible}
+                className="border-2 border-ink rounded-lg bg-cream p-1 shadow-brutal-sm hover:bg-flamingo transition-colors disabled:opacity-40 disabled:pointer-events-none"
               >
                 <X className="h-4 w-4" />
               </button>

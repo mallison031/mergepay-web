@@ -364,7 +364,7 @@ function DepositDialog({
   }
 
   return (
-    <Dialog open={open} onClose={onClose} title="Deposit to treasury">
+    <Dialog open={open} onClose={onClose} title="Deposit to treasury" dismissible={!busy}>
       <form onSubmit={submit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -456,7 +456,7 @@ function WithdrawDialog({
   }
 
   return (
-    <Dialog open={open} onClose={onClose} title="Withdraw from treasury">
+    <Dialog open={open} onClose={onClose} title="Withdraw from treasury" dismissible={!busy}>
       <form onSubmit={submit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div>
