@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
@@ -22,7 +22,6 @@ import { ListSkeleton } from "@/components/ui/skeleton";
 import { AddExpenseDialog } from "@/components/expenses/add-expense-dialog";
 import { ExpenseCard } from "@/components/expenses/expense-card";
 import { ExportHistoryButton } from "@/components/expenses/ExportHistoryButton";
-import { ExpenseExportModal } from "@/components/ExpenseExportModal";
 import { RecurringExpenseScheduler } from "@/components/RecurringExpenseScheduler";
 import { GroupAnalytics } from "@/components/expenses/GroupAnalytics";
 import { SettleDialog, type BulkSettleTarget } from "@/components/settle/settle-dialog";
@@ -45,7 +44,6 @@ import { resolveSectionStatus } from "@/lib/sectionState";
 import { useWalletDisconnected } from "@/lib/wallet-store";
 
 type Tab = "expenses" | "recurring" | "balances" | "ledger" | "treasury" | "members";
-
 
 /**
  * Records per request. Large enough that most groups never need a second
@@ -186,7 +184,6 @@ export default function GroupDetailPage() {
         </SectionBoundary>
       )}
       {tab === "balances" && (
-
         <SectionBoundary subject="the balances panel">
           <BalancesPanel groupId={id} currentUserId={currentUserId} />
         </SectionBoundary>
@@ -333,7 +330,7 @@ function ExpensesTab({
 
   // Action area changes when bulk-select is on, mirroring the issue's
   // "Settle" button requirement on the group detail page. The "Add
-  // expense" button stays in the page header — this row is only for
+  // expense" button stays in the page header - this row is only for
   // bulk-select controls.
   const actionArea = selectMode ? (
     <div className="flex items-center justify-end gap-2">
@@ -403,7 +400,7 @@ function ExpensesTab({
             >
               {!isFetchingNextPage && <ChevronDown className="h-4 w-4" />}
               {isFetchingNextPage
-                ? "Loading…"
+                ? "Loading."
                 : isError
                   ? "Try again"
                   : "Load older expenses"}
